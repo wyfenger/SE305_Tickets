@@ -2,4 +2,8 @@ language: java
 jdk:
   - oraclejdk8
 
-install: mvn compile
+install: 
+  - cd Tickets
+  - mvn compile
+  - cd ..
+  
