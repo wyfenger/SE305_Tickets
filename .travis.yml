@@ -5,4 +5,4 @@ jdk:
 install: 
   - mvn compile
 
-  
+test:
