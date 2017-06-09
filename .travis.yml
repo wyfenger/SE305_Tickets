@@ -2,4 +2,4 @@ language: java
 jdk:
   - oraclejdk8
 
-install: ./install-dependencies.sh
+install: mvn compile
