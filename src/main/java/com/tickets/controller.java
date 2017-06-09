@@ -1,32 +1,34 @@
 package com.tickets;
 
-import java.io.IOException;
+
+
+
+import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import com.tickets.user.*;
 
-import com.tickets.user.userservice;
-
+import com.tickets.user.*;
 
 public class controller extends HttpServlet
 {
-	//public userservice US;
-	//private static volatile controller instance;  
-    /*public static controller getistance() { 
-        if (instance == null) {
-            synchronized (controller.class) {
-                if (instance == null) {
-                    instance = new controller();
-                }
-            }
+	public String FileInputStream(String path) throws IOException {
+        File file=new File(path);
+        //if(!file.exists()||file.isDirectory())
+        //    throw new FileNotFoundException();
+        FileInputStream fis=new FileInputStream(file);
+        byte[] buf = new byte[1024];
+        StringBuffer sb=new StringBuffer();
+        while((fis.read(buf))!=-1) {
+            sb.append(new String(buf));    
+            buf=new byte[1024];//重新生成，避免和上次读取的数据重复
         }
-        return instance;   
-    }*/
-	//userservice usp = userservice.getistance();
+        return sb.toString();
+    }
+	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     		userservice US = userservice.getistance();
@@ -49,7 +51,6 @@ public class controller extends HttpServlet
             	} else {
             		response.getWriter().println("<h1>Registered success</h1>");
             	}
-            	
             } else if (uri.startsWith("/login")) {
             	String querystring = request.getQueryString();
             	String[] s = new String[2];
@@ -62,20 +63,26 @@ public class controller extends HttpServlet
             	} else {
             		response.getWriter().println("<h1>Login success</h1>");
             	}
+            } else if (uri.startsWith("/main")) {
+            	String path = "src\\main\\resources\\";
+            	String id = ""+1;
+            	String ss = FileInputStream(path + id + ".json");
+            	response.getWriter().println(ss);
+            	for (int i = 1; i <= 1; i++) {
+            		id = "" + i;
+            		ss = FileInputStream(path + id + ".json");
+            		response.getWriter().println(ss);
+            	}
+            } else if (uri.startsWith("/film")) {
+            	String path = "src\\main\\resources\\";
+            	String[] s = new String[2];
+            	String querystring = request.getQueryString();
+            	s = querystring.split("=");
+            	int tmp = Integer.parseInt(s[1]);
+            	String id = "" + tmp;
+            	String ss = FileInputStream(path + id + ".json");
+        		response.getWriter().println(ss);
             }
-            /*
-            response.getWriter().println("<h1>Hello Servlet</h1>");
-            response.getWriter().println("<h1>"+"url=" + request.getRequestURL()+"</h1>");
             
-            response.getWriter().println("uri=" + request.getRequestURI());
-            
-            response.getWriter().println("querystring=" + request.getQueryString());
-            
-            response.getWriter().println("RemoteAddr=" + request.getRemoteAddr() + '\n');
-            
-            response.getWriter().println("RemoteHost=" + request.getRemoteHost());
-            
-            response.getWriter().println("Method=" + request.getMethod());
-            */
     }
 }

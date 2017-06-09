@@ -28,7 +28,22 @@
         </div>
     </form>
     
-
+    <form action="/main" method="get">
+        <div class="submit">
+          <button type="submit">MainPage</button>    
+        </div>
+    </form>
+    
+	<form action="/film" method="get">
+		<div>
+          <label for="film id">film id</label>
+          <input type="film id" name="film id"/>
+        </div>
+        <div class="submit">
+          <button type="submit">film</button>    
+        </div>
+    </form>
+    
 </body>
 
 </html>
